@@ -46,8 +46,12 @@ export default function Home() {
           coatOfArms: country.coatOfArms?.png || "",
           flag: country.flags?.png || "",
         });
-      } catch (e: any) {
-        setError(e.message || "Unknown error");
+      } catch (e: unknown) {
+        if (e instanceof Error) {
+          setError(e.message);
+        } else {
+          setError("Unknown error");
+        }
       } finally {
         setLoading(false);
       }
